@@ -66,6 +66,7 @@ python parquet_to_postgres.py \
 
 ```
 ### dockerized ingestion script
+```bash
 URL="https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-01.parquet"
 
 docker run -it \
@@ -78,3 +79,4 @@ docker run -it \
     --db=ny_taxi \
     --table_name=yellow_taxi_trips_teste \
     --url=${URL}
+```
