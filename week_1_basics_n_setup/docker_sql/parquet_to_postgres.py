@@ -1,7 +1,10 @@
 import pandas as pd
 import pyarrow.parquet as pq
 from sqlalchemy import create_engine
+from urllib.parse import urlparse
 from time import time
+import argparse
+import os
 
 def create_table_from_parquet(parquet_file: pq.ParquetFile, table_name: str, engine: create_engine) -> None:
     """
@@ -46,15 +49,25 @@ def query_postgres(query: str, engine: create_engine) -> pd.DataFrame:
     """
     return pd.read_sql(query, con=engine)
 
-def main(parquet_file_path: str, postgres_url: str, table_name: str) -> None:
+def main(params) -> None:
     """
     Main function to orchestrate the process of creating a table, inserting data, and querying in PostgreSQL.
+    """     
+    user = params.user 
+    password = params.password 
+    host = params.host 
+    port = params.port
+    db = params.db
+    table_name = params.table_name
+    url = params.url
 
-    Parameters:
-    - parquet_file_path (str): The path to the Parquet file.
-    - postgres_url (str): The URL for connecting to the PostgreSQL database.
-    - table_name (str): The name for the PostgreSQL table.
-    """
+    os.system(f"curl -O {url}")
+    
+    path = urlparse(url).path
+    parquet_file_path = f"./{os.path.basename(path)}"
+    postgres_url = f'postgresql://{user}:{password}@{host}:{port}/{db}'
+    
+    table_name = f"{table_name}"
     engine = create_engine(postgres_url)
     parquet_file = pq.ParquetFile(parquet_file_path)
 
@@ -73,8 +86,14 @@ def main(parquet_file_path: str, postgres_url: str, table_name: str) -> None:
 
 
 if __name__ == "__main__":
-    parquet_file_path = "./yellow_tripdata_2023-01.parquet"
-    postgres_url = 'postgresql://root:root@localhost:5432/ny_taxi'
-    table_name = "yellow_taxi_data"
+    parser = argparse.ArgumentParser(description = 'Ingest parquet data to Postgres')
+    parser.add_argument('--user', help='Username for Postgres')
+    parser.add_argument('--password', help='Password for Postgres')
+    parser.add_argument('--host', help='Host for Postgres')
+    parser.add_argument('--port', help='Port for Postgres')
+    parser.add_argument('--db', help='Database for Postgres')
+    parser.add_argument('--table_name', help='Table name for Postgres')
+    parser.add_argument('--url', help='URL of parquet file')
+    args = parser.parse_args()
 
-    main(parquet_file_path, postgres_url, table_name)
+    main(args)
