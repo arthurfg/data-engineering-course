@@ -6,6 +6,7 @@
 
 ## Question 2
 Commands:
+Dockerfile:
 ```Dockerfile
 FROM python:3.9
 
@@ -95,7 +96,7 @@ limit 1
 Result: `JFK Airport`
 
 ## Question 7
-
+Terrafomr apply output:
 ```bash
 Terraform used the selected providers to generate the following execution
 plan. Resource actions are indicated with the following symbols:
