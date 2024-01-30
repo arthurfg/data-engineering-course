@@ -2,6 +2,7 @@
 ### Arthur Gusmão
 
 ## Question 1
+`--rm`
 
 ## Question 2
 Commands:
@@ -34,6 +35,8 @@ from green_taxi_data
 where (date(lpep_pickup_datetime) = '2019-09-18' and date(lpep_dropoff_datetime) = '2019-09-18')
 order by lpep_dropoff_datetime desc
 ```
+
+Result: `15612`
 ## Question 4
 
 ```sql
@@ -43,3 +46,50 @@ group by 1,2
 order by 2 desc
 limit 1
 ```
+
+Result: `2019-09-26`
+
+## Question 5
+
+```sql
+with table_join as (select t2."Borough",sum(t1.total_amount) as total from green_taxi_data as t1 
+left join lookup_data as t2
+on t1."PULocationID" = t2."LocationID"
+where date(t1.lpep_pickup_datetime) = '2019-09-18' and t2."Borough" != 'Unknown'
+group by 1
+order by 2 desc
+)
+select *
+from table_join
+where total > 50000
+```
+
+Result: `"Brooklyn" "Manhattan" "Queens"`
+
+## Question 6
+
+```sql
+with table_join as (
+	select t1.*, t2."Zone" as pickup_zone_name
+	from green_taxi_data as t1 
+	left join lookup_data as t2
+	on t1."PULocationID" = t2."LocationID"
+	where t2."Borough" != 'Unknown'
+),
+table_join_2 as(
+	select t1.*, t2."Zone" as dropoff_zone_name
+	from table_join as t1 
+	left join lookup_data as t2
+	on t1."DOLocationID" = t2."LocationID"
+	where t2."Borough" != 'Unknown'	
+
+)
+select dropoff_zone_name,MAX(tip_amount) 
+from table_join_2
+where pickup_zone_name = 'Astoria' 
+group by 1
+order by 2 desc
+limit 1
+```
+
+Result: `JFK Airport`

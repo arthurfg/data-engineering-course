@@ -161,5 +161,5 @@ cython_debug/
 
 # Postgres
 ny_taxi_postgres_data/
-*.parquet
+*tripdata*.parquet
 arthur-data-engineering-course-70211f2f55c5.json
