@@ -5,7 +5,6 @@
 `--rm`
 
 ## Question 2
-Commands:
 
 Dockerfile:
 ```Dockerfile
@@ -14,6 +13,8 @@ FROM python:3.9
 WORKDIR /app
 ENTRYPOINT [ "bash" ]
 ```
+
+Commands:
 ```bash
 cd /Users/apple/Documents/data-engineering-course/week_1_basics_n_setup/docker_sql
 ```
