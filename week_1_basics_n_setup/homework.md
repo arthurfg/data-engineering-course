@@ -6,6 +6,7 @@
 
 ## Question 2
 Commands:
+
 Dockerfile:
 ```Dockerfile
 FROM python:3.9
