@@ -15,7 +15,7 @@ variable "location" {
 
 variable "bq_dataset_name" {
   description = "My bq dataset name"
-  default     = "demo_dataset"
+  default     = "course_dataset"
 }
 
 variable "gcs_storage_class" {
