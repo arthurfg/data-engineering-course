@@ -70,4 +70,4 @@ def test_output(output, *args) -> None:
     assert output is not None, 'The output is undefined'
 ```
 
-#### Running [SQL](https://github.com/arthurfg/data-engineering-course/blob/main/week_3_data_warehouse/homework.sql)https://github.com/arthurfg/data-engineering-course/blob/main/week_3_data_warehouse/homework.sql queries to complete the homework.
+#### Run [SQL](https://github.com/arthurfg/data-engineering-course/blob/main/week_3_data_warehouse/homework.sql) queries to complete the homework.
